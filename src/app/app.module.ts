@@ -9,6 +9,7 @@ import { Store } from 'store';
 // containers
 import { AppComponent } from './app.component';
 import { AuthFormModule } from './auth-form/auth-form.module';
+import { AuthRememberComponent } from './auth-form/auth-remember.component';
 
 // components
 
@@ -19,10 +20,11 @@ export const ROUTES: Routes = [];
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
-    AuthFormModule
+    AuthFormModule,
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    AuthRememberComponent
   ],
   providers: [
     Store
