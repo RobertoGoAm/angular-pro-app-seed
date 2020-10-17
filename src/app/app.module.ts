@@ -7,7 +7,8 @@ import { Store } from 'store';
 // feature modules
 
 // containers
-import { AppComponent } from './containers/app/app.component';
+import { AppComponent } from './app.component';
+import { AuthFormModule } from './auth-form/auth-form.module';
 
 // components
 
@@ -17,7 +18,8 @@ export const ROUTES: Routes = [];
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    AuthFormModule
   ],
   declarations: [
     AppComponent
