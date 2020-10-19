@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { AuthFormComponent } from './auth-form.component';
+import { AuthMessageComponent } from './auth-message.component';
 
 @NgModule({
   declarations: [
-    AuthFormComponent
+    AuthFormComponent,
+    AuthMessageComponent
   ],
   imports: [
     CommonModule,
