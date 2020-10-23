@@ -8,8 +8,16 @@ import { User } from './auth-form/auth-form.interface';
   styleUrls: ['app.component.scss'],
   template: `
     <div>
-      <ng-container [ngTemplateOutlet]="tmpl"></ng-container>
-      <ng-template #tmpl>Todd Motto : England, UK</ng-template>
+      <ng-container
+        [ngTemplateOutlet]="tmpl"
+        [ngTemplateOutletContext]="ctx"></ng-container>
+
+      <ng-template
+        #tmpl
+        let-name
+        let-location="location">
+        {{ name }} : {{ location }}
+      </ng-template>
     </div>
   `
 })
@@ -17,6 +25,10 @@ export class AppComponent implements AfterContentInit {
   component: ComponentRef<AuthFormComponent>;
   @ViewChild('entry', { read: ViewContainerRef }) entry: ViewContainerRef;
   @ViewChild('tmpl') tmpl: TemplateRef<any>;
+  ctx = {
+      $implicit: 'Todd Motto',
+      location: 'England, UK'
+  };
 
   constructor(
     private resolver: ComponentFactoryResolver
