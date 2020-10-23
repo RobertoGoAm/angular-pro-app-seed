@@ -8,7 +8,7 @@ import { User } from './auth-form/auth-form.interface';
   styleUrls: ['app.component.scss'],
   template: `
     <div>
-      <ng-container
+      <!-- <ng-container
         [ngTemplateOutlet]="tmpl"
         [ngTemplateOutletContext]="ctx"></ng-container>
 
@@ -17,7 +17,11 @@ import { User } from './auth-form/auth-form.interface';
         let-name
         let-location="location">
         {{ name }} : {{ location }}
-      </ng-template>
+      </ng-template> -->
+
+      <example-one></example-one>
+      <example-two></example-two>
+      <example-three></example-three>
     </div>
   `
 })
