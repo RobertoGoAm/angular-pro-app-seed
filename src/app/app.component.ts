@@ -19,7 +19,7 @@ import { User } from './auth-form/auth-form.interface';
         let-location="location">
         {{ name }} : {{ location }}
       </ng-template> -->
-
+<!--
       <button (click)="addProp()">Add property</button>
       <button (click)="changeUser()">Change user object</button>
       <button (click)="changeName()">Change name property</button>
@@ -27,7 +27,17 @@ import { User } from './auth-form/auth-form.interface';
       <div class="users">
         <example-one [user]="user"></example-one>
         <example-two [user]="user"></example-two>
-      </div>
+      </div> -->
+
+      <label>
+        Credit Card Number
+
+        <input
+          name="credit-card"
+          type="text"
+          placeholder="Enter your 16-digits card number"
+          credit-card>
+     </label>
     </div>
   `
 })

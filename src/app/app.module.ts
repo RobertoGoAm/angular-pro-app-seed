@@ -13,6 +13,7 @@ import { AuthRememberComponent } from './auth-form/auth-remember.component';
 import { ExampleOneComponent } from './one/one.component';
 import { ExampleTwoComponent } from './two/two.component';
 import { ExampleThreeComponent } from './three/three.component';
+import { CreditCardDirective } from './credit-card/credit-card.directive';
 
 // components
 
@@ -31,6 +32,7 @@ export const ROUTES: Routes = [];
     ExampleOneComponent,
     ExampleTwoComponent,
     ExampleThreeComponent,
+    CreditCardDirective
   ],
   providers: [
     Store
