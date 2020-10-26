@@ -28,7 +28,7 @@ import { User } from './auth-form/auth-form.interface';
         <example-one [user]="user"></example-one>
         <example-two [user]="user"></example-two>
       </div> -->
-
+<!--
       <label>
         Credit Card Number
 
@@ -37,7 +37,33 @@ import { User } from './auth-form/auth-form.interface';
           type="text"
           placeholder="Enter your 16-digits card number"
           credit-card>
-     </label>
+      </label>
+
+      <label
+        tooltip="3 digits, back of your card"
+        #myTooltip="tooltip">
+        Enter your security code
+
+        <span
+          (mouseover)="myTooltip.show()"
+          (mouseout)="myTooltip.hide()">
+          (?)
+        </span>
+
+        <input type="text">
+      </label> -->
+
+      <ul>
+        <li *myFor="let item of items; let i = index">
+          {{ i }} Member: {{ item.name | json }}
+        </li>
+
+        <ng-template myFor [myForOf]="items" let-item let-i="index">
+          <li>
+            {{ i }} Member: {{ item.name | json }}
+          </li>
+        </ng-template>
+      </ul>
     </div>
   `
 })
@@ -54,10 +80,27 @@ export class AppComponent implements AfterContentInit {
     age: 44,
     location: 'California'
   };
+  items = [{
+    name: 'Mark Hoppus',
+    age: 44,
+    location: 'California'
+  },{
+    name: 'Tom Delonge',
+    age: 41,
+    location: 'California'
+  },{
+    name: 'Travis Barker',
+    age: 41,
+    location: 'California'
+  }];
 
   constructor(
     private resolver: ComponentFactoryResolver
-  ) {}
+  ) {
+    setTimeout(() => {
+      this.items = [...this.items, { name: 'Matt Skiba', age: 40, location: 'California' }]
+    }, 2000)
+  }
 
   ngAfterContentInit() {
     // const authFormFactory = this.resolver.resolveComponentFactory(AuthFormComponent);
