@@ -16,6 +16,7 @@ import { ExampleThreeComponent } from './three/three.component';
 import { CreditCardDirective } from './credit-card/credit-card.directive';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { MyForDirective } from './my-for/my-for.directive';
+import { FileSizePipe } from './filesize.pipe';
 
 // components
 
@@ -36,7 +37,8 @@ export const ROUTES: Routes = [];
     ExampleThreeComponent,
     CreditCardDirective,
     TooltipDirective,
-    MyForDirective
+    MyForDirective,
+    FileSizePipe
   ],
   providers: [
     Store

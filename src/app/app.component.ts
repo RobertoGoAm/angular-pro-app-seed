@@ -1,7 +1,13 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { AuthFormComponent } from './auth-form/auth-form.component';
 
 import { User } from './auth-form/auth-form.interface';
+
+interface File {
+  name: string,
+  size: number,
+  type: string
+}
 
 @Component({
   selector: 'app-root',
@@ -52,7 +58,7 @@ import { User } from './auth-form/auth-form.interface';
 
         <input type="text">
       </label> -->
-
+<!--
       <ul>
         <li *myFor="let item of items; let i = index">
           {{ i }} Member: {{ item.name | json }}
@@ -63,11 +69,16 @@ import { User } from './auth-form/auth-form.interface';
             {{ i }} Member: {{ item.name | json }}
           </li>
         </ng-template>
-      </ul>
+      </ul> -->
+
+      <div *ngFor="let file of files">
+        <p>{{ file.name }}</p>
+        <p>{{ file.size | filesize:'megabytes' }}</p>
+      </div>
     </div>
   `
 })
-export class AppComponent implements AfterContentInit {
+export class AppComponent implements AfterContentInit, OnInit {
   component: ComponentRef<AuthFormComponent>;
   @ViewChild('entry', { read: ViewContainerRef }) entry: ViewContainerRef;
   @ViewChild('tmpl') tmpl: TemplateRef<any>;
@@ -93,6 +104,7 @@ export class AppComponent implements AfterContentInit {
     age: 41,
     location: 'California'
   }];
+  files: File[];
 
   constructor(
     private resolver: ComponentFactoryResolver
@@ -100,6 +112,14 @@ export class AppComponent implements AfterContentInit {
     setTimeout(() => {
       this.items = [...this.items, { name: 'Matt Skiba', age: 40, location: 'California' }]
     }, 2000)
+  }
+
+  ngOnInit() {
+    this.files = [
+      { name: 'logo.svg', size: 2120109, type: 'image/svg' },
+      { name: 'banner.jpg', size: 18029, type: 'image/jpg' },
+      { name: 'background.jpg', size: 1784562, type: 'image/png' }
+    ]
   }
 
   ngAfterContentInit() {
