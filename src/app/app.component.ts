@@ -2,10 +2,11 @@ import { AfterContentInit, ChangeDetectionStrategy, Component, ComponentFactoryR
 import { AuthFormComponent } from './auth-form/auth-form.component';
 
 import { User } from './auth-form/auth-form.interface';
+import { FileSizePipe } from './filesize.pipe';
 
 interface File {
   name: string,
-  size: number,
+  size: any,
   type: string
 }
 
@@ -71,12 +72,15 @@ interface File {
         </ng-template>
       </ul> -->
 
-      <div *ngFor="let file of files">
+      <div *ngFor="let file of mapped">
         <p>{{ file.name }}</p>
-        <p>{{ file.size | filesize:'megabytes' }}</p>
+        <p>{{ file.size }}</p>
       </div>
     </div>
-  `
+  `,
+  providers: [
+    FileSizePipe
+  ]
 })
 export class AppComponent implements AfterContentInit, OnInit {
   component: ComponentRef<AuthFormComponent>;
@@ -105,9 +109,11 @@ export class AppComponent implements AfterContentInit, OnInit {
     location: 'California'
   }];
   files: File[];
+  mapped: File[];
 
   constructor(
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private fileSizePipe: FileSizePipe
   ) {
     setTimeout(() => {
       this.items = [...this.items, { name: 'Matt Skiba', age: 40, location: 'California' }]
@@ -119,7 +125,14 @@ export class AppComponent implements AfterContentInit, OnInit {
       { name: 'logo.svg', size: 2120109, type: 'image/svg' },
       { name: 'banner.jpg', size: 18029, type: 'image/jpg' },
       { name: 'background.jpg', size: 1784562, type: 'image/png' }
-    ]
+    ];
+    this.mapped = this.files.map(file => {
+      return {
+        name: file.name,
+        type: file.type,
+        size: this.fileSizePipe.transform(file.size, 'mb')
+      };
+    });
   }
 
   ngAfterContentInit() {
