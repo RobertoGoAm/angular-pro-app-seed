@@ -17,6 +17,7 @@ import { CreditCardDirective } from './credit-card/credit-card.directive';
 import { TooltipDirective } from './tooltip/tooltip.directive';
 import { MyForDirective } from './my-for/my-for.directive';
 import { FileSizePipe } from './filesize.pipe';
+import { StockInventoryModule } from './stock-inventory/stock-inventory.module';
 
 // components
 
@@ -28,6 +29,7 @@ export const ROUTES: Routes = [];
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     AuthFormModule,
+    StockInventoryModule
   ],
   declarations: [
     AppComponent,

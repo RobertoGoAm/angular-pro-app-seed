@@ -71,11 +71,13 @@ interface File {
           </li>
         </ng-template>
       </ul> -->
-
+<!--
       <div *ngFor="let file of mapped">
         <p>{{ file.name }}</p>
         <p>{{ file.size }}</p>
-      </div>
+      </div> -->
+
+      <stock-inventory></stock-inventory>
     </div>
   `,
   providers: [
