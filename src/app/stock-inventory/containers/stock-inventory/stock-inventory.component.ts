@@ -54,8 +54,18 @@ export class StockInventoryComponent {
       product_id: new FormControl(''),
       quantity: new FormControl(10)
     }),
-    stock: new FormArray([])
+    stock: new FormArray([
+      this.createStock({ product_id: 1, quantity: 10 }),
+      this.createStock({ product_id: 3, quantity: 50 }),
+    ])
   })
+
+  createStock(stock: any) {
+    return new FormGroup({
+      product_id: new FormControl(parseInt(stock.product_id, 10) || ''),
+      quantity: new FormControl(stock.quantity)
+    });
+  }
 
   onSubmit() {
     console.log('Submit:', this.form.value);
