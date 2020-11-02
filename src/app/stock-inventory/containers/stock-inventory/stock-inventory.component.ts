@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { from } from 'core-js/fn/array';
-import { FormControl, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Product } from '../../models/products.interface';
 
 @Component({
@@ -47,25 +47,26 @@ export class StockInventoryComponent {
     { "id": 5, "price": 600, "name": "Apple Watch" },
   ];
 
-  form = new FormGroup({
-    store: new FormGroup({
-      branch: new FormControl(''),
-      code: new FormControl('')
+  form = this.formBuilder.group({
+    store: this.formBuilder.group({
+      branch: '',
+      code: ''
     }),
-    selector: new FormGroup({
-      product_id: new FormControl(''),
-      quantity: new FormControl(10)
-    }),
-    stock: new FormArray([
+    selector: this.createStock({}),
+    stock: this.formBuilder.array([
       this.createStock({ product_id: 1, quantity: 10 }),
       this.createStock({ product_id: 3, quantity: 50 }),
     ])
   })
 
+  constructor(
+    private formBuilder: FormBuilder
+  ) {}
+
   createStock(stock: any) {
-    return new FormGroup({
-      product_id: new FormControl(parseInt(stock.product_id, 10) || ''),
-      quantity: new FormControl(stock.quantity)
+    return this.formBuilder.group({
+      product_id: parseInt(stock.product_id, 10) || '',
+      quantity: stock.quantity || 10
     });
   }
 
