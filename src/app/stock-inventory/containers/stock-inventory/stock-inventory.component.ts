@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { from } from 'core-js/fn/array';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { Product } from '../../models/products.interface';
+import { Item, Product } from '../../models/products.interface';
+import { StockInventoryService } from '../../services/stock-inventory.services';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'stock-inventory',
@@ -21,6 +23,7 @@ import { Product } from '../../models/products.interface';
 
         <stock-products
           [parent]="form"
+          [map]="productMap"
           (removed)="removeStock($event)">
         </stock-products>
 
@@ -38,30 +41,39 @@ import { Product } from '../../models/products.interface';
     </div>
   `
 })
-export class StockInventoryComponent {
-  products: Product[] = [
-    { "id": 1, "price": 2800, "name": "MacBook Pro" },
-    { "id": 2, "price": 50, "name": "USB-C Adaptor" },
-    { "id": 3, "price": 400, "name": "iPod" },
-    { "id": 4, "price": 900, "name": "iPhone" },
-    { "id": 5, "price": 600, "name": "Apple Watch" },
-  ];
-
+export class StockInventoryComponent implements OnInit {
+  products: Product[];
+  productMap: Map<number, Product>;
   form = this.formBuilder.group({
     store: this.formBuilder.group({
       branch: '',
       code: ''
     }),
     selector: this.createStock({}),
-    stock: this.formBuilder.array([
-      this.createStock({ product_id: 1, quantity: 10 }),
-      this.createStock({ product_id: 3, quantity: 50 }),
-    ])
+    stock: this.formBuilder.array([])
   })
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private stockService: StockInventoryService
   ) {}
+
+  ngOnInit() {
+    const cart = this.stockService.getCartItems();
+    const products = this.stockService.getProducts();
+
+    Observable
+      .forkJoin(cart, products)
+      .subscribe(([cart, products]: [Item[], Product[]]) => {
+
+        const myMap = products
+          .map<[number, Product]>(product => [product.id, product]);
+
+        this.productMap = new Map<number, Product>(myMap);
+        this.products = products;
+        cart.forEach(item => this.addStock(item));
+      });
+  }
 
   createStock(stock: any) {
     return this.formBuilder.group({
