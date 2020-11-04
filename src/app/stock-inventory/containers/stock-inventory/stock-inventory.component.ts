@@ -27,6 +27,10 @@ import 'rxjs/add/observable/forkJoin';
           (removed)="removeStock($event)">
         </stock-products>
 
+        <div class="stock-inventory__price">
+          Total: {{ total | currency:'USD':true }}
+        </div>
+
         <div class="stock-inventory__buttons">
           <button
             type="submit"
@@ -52,6 +56,7 @@ export class StockInventoryComponent implements OnInit {
     selector: this.createStock({}),
     stock: this.formBuilder.array([])
   })
+  total: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -72,7 +77,20 @@ export class StockInventoryComponent implements OnInit {
         this.productMap = new Map<number, Product>(myMap);
         this.products = products;
         cart.forEach(item => this.addStock(item));
+
+        this.calculateTotal(this.form.get('stock').value);
+
+        this.form.get('stock')
+          .valueChanges.subscribe(value => this.calculateTotal(value));
       });
+  }
+
+  calculateTotal(value: Item[]) {
+    const total = value.reduce((prev, next) => {
+      return prev + (next.quantity * this.productMap.get(next.product_id).price)
+    }, 0);
+
+    this.total = total;
   }
 
   createStock(stock: any) {
