@@ -6,6 +6,7 @@ import { StockInventoryComponent } from './containers/stock-inventory/stock-inve
 import { StockBranchComponent } from './component/stock-branch/stock-branch.component';
 import { StockProductsComponent } from './component/stock-products/stock-products.component';
 import { StockSelectorComponent } from './component/stock-selector/stock-selector.component';
+import { StockCounterComponent } from "./component/stock-counter/stock-counter.component";
 import { HttpModule } from '@angular/http';
 import { StockInventoryService } from './services/stock-inventory.services';
 
@@ -14,7 +15,8 @@ import { StockInventoryService } from './services/stock-inventory.services';
     StockInventoryComponent,
     StockBranchComponent,
     StockProductsComponent,
-    StockSelectorComponent
+    StockSelectorComponent,
+    StockCounterComponent
   ],
   providers: [
     StockInventoryService
