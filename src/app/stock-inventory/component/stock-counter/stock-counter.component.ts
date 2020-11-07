@@ -12,9 +12,15 @@ const COUNTER_CONTROL_ACCESSOR = {
   providers: [COUNTER_CONTROL_ACCESSOR],
   styleUrls: ['stock-counter.component.scss'],
   template: `
-    <div class="stock-counter">
+    <div
+      class="stock-counter"
+      [class.focused]="focus">
       <div>
-        <div>
+        <div
+          tabIndex="0"
+          (keydown)="onKeyDown($event)"
+          (blur)="onBlur($event)"
+          (focus)="onFocus($event)">
           <p>{{ value }}</p>
 
           <div>
@@ -44,6 +50,40 @@ export class StockCounterComponent implements ControlValueAccessor {
   value: number = 10;
   private onTouch: Function;
   private onModelChange: Function;
+  focus: boolean;
+
+  onKeyDown(event: KeyboardEvent) {
+    const handlers: any = {
+      ArrowDown: () => this.decrement(),
+      ArrowUp: () => this.increment(),
+    }
+
+    if (handlers[event.code]) {
+      handlers[event.code]();
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    this.onTouch();
+  }
+
+  onBlur(event: FocusEvent) {
+    this.focus = false;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.onTouch();
+  }
+
+  onFocus(event: FocusEvent) {
+    this.focus = false;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.onTouch();
+  }
 
   writeValue(value: number) {
     this.value = value || 0;
