@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Item, Product } from '../../models/products.interface';
 import { StockInventoryService } from '../../services/stock-inventory.services';
 import { Observable } from 'rxjs/Observable';
@@ -50,8 +50,8 @@ export class StockInventoryComponent implements OnInit {
   productMap: Map<number, Product>;
   form = this.formBuilder.group({
     store: this.formBuilder.group({
-      branch: '',
-      code: ''
+      branch: ['', Validators.required],
+      code: ['', Validators.required]
     }),
     selector: this.createStock({}),
     stock: this.formBuilder.array([])
