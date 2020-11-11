@@ -1,5 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 import { Item, Product } from "../../models/products.interface";
 import { StockInventoryService } from "../../services/stock-inventory.services";
 import { Observable } from "rxjs/Observable";
@@ -47,7 +53,11 @@ export class StockInventoryComponent implements OnInit {
   form = this.formBuilder.group(
     {
       store: this.formBuilder.group({
-        branch: ["", [Validators.required, StockValidators.checkBranch]],
+        branch: [
+          "",
+          [Validators.required, StockValidators.checkBranch],
+          [this.validateBranch.bind(this)]
+        ],
         code: ["", Validators.required]
       }),
       selector: this.createStock({}),
@@ -84,6 +94,12 @@ export class StockInventoryComponent implements OnInit {
           .valueChanges.subscribe((value) => this.calculateTotal(value));
       }
     );
+  }
+
+  validateBranch(control: AbstractControl) {
+    return this.stockService
+      .checkBranchId(control.value)
+      .map((response: boolean) => (response ? null : { unkownBranch: true }));
   }
 
   calculateTotal(value: Item[]) {
