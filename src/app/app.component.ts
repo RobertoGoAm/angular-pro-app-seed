@@ -1,19 +1,32 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, ComponentFactoryResolver, ComponentRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { AuthFormComponent } from './auth-form/auth-form.component';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from "@angular/core";
+import { NavigationEnd, Router } from "@angular/router";
+import { AuthFormComponent } from "./auth-form/auth-form.component";
 
-import { User } from './auth-form/auth-form.interface';
-import { FileSizePipe } from './filesize.pipe';
+import { User } from "./auth-form/auth-form.interface";
+import { FileSizePipe } from "./filesize.pipe";
+
+import "rxjs/add/operator/filter";
 
 interface File {
-  name: string,
-  size: any,
-  type: string
+  name: string;
+  size: any;
+  type: string;
 }
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   changeDetection: ChangeDetectionStrategy.Default,
-  styleUrls: ['app.component.scss'],
+  styleUrls: ["app.component.scss"],
   template: `
     <div>
       <!-- <ng-container
@@ -26,7 +39,7 @@ interface File {
         let-location="location">
         {{ name }} : {{ location }}
       </ng-template> -->
-<!--
+      <!--
       <button (click)="addProp()">Add property</button>
       <button (click)="changeUser()">Change user object</button>
       <button (click)="changeName()">Change name property</button>
@@ -35,7 +48,7 @@ interface File {
         <example-one [user]="user"></example-one>
         <example-two [user]="user"></example-two>
       </div> -->
-<!--
+      <!--
       <label>
         Credit Card Number
 
@@ -59,7 +72,7 @@ interface File {
 
         <input type="text">
       </label> -->
-<!--
+      <!--
       <ul>
         <li *myFor="let item of items; let i = index">
           {{ i }} Member: {{ item.name | json }}
@@ -71,70 +84,92 @@ interface File {
           </li>
         </ng-template>
       </ul> -->
-<!--
+      <!--
       <div *ngFor="let file of mapped">
         <p>{{ file.name }}</p>
         <p>{{ file.size }}</p>
       </div> -->
-
-      <stock-inventory></stock-inventory>
+      <!--
+      <stock-inventory></stock-inventory> -->
+      <header>
+        <img src="/img/logo.svg" />
+      </header>
+      <div class="app__content">
+        <nav>
+          <a routerLink="folder/inbox" routerLinkActive="active"> Inbox </a>
+          <a routerLink="folder/trash" routerLinkActive="active"> Trash </a>
+        </nav>
+        <mail-app></mail-app>
+      </div>
     </div>
   `,
-  providers: [
-    FileSizePipe
-  ]
+  providers: [FileSizePipe]
 })
 export class AppComponent implements AfterContentInit, OnInit {
   component: ComponentRef<AuthFormComponent>;
-  @ViewChild('entry', { read: ViewContainerRef }) entry: ViewContainerRef;
-  @ViewChild('tmpl') tmpl: TemplateRef<any>;
+  @ViewChild("entry", { read: ViewContainerRef }) entry: ViewContainerRef;
+  @ViewChild("tmpl") tmpl: TemplateRef<any>;
   ctx = {
-      $implicit: 'Todd Motto',
-      location: 'England, UK'
+    $implicit: "Todd Motto",
+    location: "England, UK"
   };
   user: any = {
-    name: 'Mark Hoppus',
+    name: "Mark Hoppus",
     age: 44,
-    location: 'California'
+    location: "California"
   };
-  items = [{
-    name: 'Mark Hoppus',
-    age: 44,
-    location: 'California'
-  },{
-    name: 'Tom Delonge',
-    age: 41,
-    location: 'California'
-  },{
-    name: 'Travis Barker',
-    age: 41,
-    location: 'California'
-  }];
+  items = [
+    {
+      name: "Mark Hoppus",
+      age: 44,
+      location: "California"
+    },
+    {
+      name: "Tom Delonge",
+      age: 41,
+      location: "California"
+    },
+    {
+      name: "Travis Barker",
+      age: 41,
+      location: "California"
+    }
+  ];
   files: File[];
   mapped: File[];
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    private fileSizePipe: FileSizePipe
+    private fileSizePipe: FileSizePipe,
+    private router: Router
   ) {
     setTimeout(() => {
-      this.items = [...this.items, { name: 'Matt Skiba', age: 40, location: 'California' }]
-    }, 2000)
+      this.items = [
+        ...this.items,
+        { name: "Matt Skiba", age: 40, location: "California" }
+      ];
+    }, 2000);
   }
 
   ngOnInit() {
     this.files = [
-      { name: 'logo.svg', size: 2120109, type: 'image/svg' },
-      { name: 'banner.jpg', size: 18029, type: 'image/jpg' },
-      { name: 'background.jpg', size: 1784562, type: 'image/png' }
+      { name: "logo.svg", size: 2120109, type: "image/svg" },
+      { name: "banner.jpg", size: 18029, type: "image/jpg" },
+      { name: "background.jpg", size: 1784562, type: "image/png" }
     ];
-    this.mapped = this.files.map(file => {
+    this.mapped = this.files.map((file) => {
       return {
         name: file.name,
         type: file.type,
-        size: this.fileSizePipe.transform(file.size, 'mb')
+        size: this.fileSizePipe.transform(file.size, "mb")
       };
     });
+
+    this.router.events
+      .filter((event) => event instanceof NavigationEnd)
+      .subscribe((event) => {
+        console.log(event);
+      });
   }
 
   ngAfterContentInit() {
@@ -158,22 +193,22 @@ export class AppComponent implements AfterContentInit, OnInit {
   }
 
   loginUser(user: User) {
-   console.log('Login', user);
+    console.log("Login", user);
   }
 
   addProp() {
-    this.user.email = 'blink@blink-182.net';
+    this.user.email = "blink@blink-182.net";
   }
 
   changeName() {
-    this.user.name = 'Travis Barker';
+    this.user.name = "Travis Barker";
   }
 
   changeUser() {
     this.user = {
-      name: 'Tom Delonge',
+      name: "Tom Delonge",
       age: 41,
-      location: 'California'
+      location: "California"
     };
   }
 }

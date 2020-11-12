@@ -1,23 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { Routes, RouterModule } from "@angular/router";
 
-import { Store } from 'store';
+import { Store } from "store";
 
 // feature modules
 
 // containers
-import { AppComponent } from './app.component';
-import { AuthFormModule } from './auth-form/auth-form.module';
-import { AuthRememberComponent } from './auth-form/auth-remember.component';
-import { ExampleOneComponent } from './one/one.component';
-import { ExampleTwoComponent } from './two/two.component';
-import { ExampleThreeComponent } from './three/three.component';
-import { CreditCardDirective } from './credit-card/credit-card.directive';
-import { TooltipDirective } from './tooltip/tooltip.directive';
-import { MyForDirective } from './my-for/my-for.directive';
-import { FileSizePipe } from './filesize.pipe';
-import { StockInventoryModule } from './stock-inventory/stock-inventory.module';
+import { AppComponent } from "./app.component";
+import { AuthFormModule } from "./auth-form/auth-form.module";
+import { AuthRememberComponent } from "./auth-form/auth-remember.component";
+import { ExampleOneComponent } from "./one/one.component";
+import { ExampleTwoComponent } from "./two/two.component";
+import { ExampleThreeComponent } from "./three/three.component";
+import { CreditCardDirective } from "./credit-card/credit-card.directive";
+import { TooltipDirective } from "./tooltip/tooltip.directive";
+import { MyForDirective } from "./my-for/my-for.directive";
+import { FileSizePipe } from "./filesize.pipe";
+import { StockInventoryModule } from "./stock-inventory/stock-inventory.module";
+import { MailModule } from "./mail/mail.module";
 
 // components
 
@@ -29,7 +30,8 @@ export const ROUTES: Routes = [];
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     AuthFormModule,
-    StockInventoryModule
+    StockInventoryModule,
+    MailModule
   ],
   declarations: [
     AppComponent,
@@ -42,11 +44,7 @@ export const ROUTES: Routes = [];
     MyForDirective,
     FileSizePipe
   ],
-  providers: [
-    Store
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+  providers: [Store],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
