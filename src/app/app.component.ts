@@ -96,8 +96,22 @@ interface File {
       </header>
       <div class="app__content">
         <nav>
-          <a routerLink="folder/inbox" routerLinkActive="active"> Inbox </a>
-          <a routerLink="folder/trash" routerLinkActive="active"> Trash </a>
+          <a
+            [routerLink]="[
+              { outlets: { primary: 'folder/inbox', pane: null } }
+            ]"
+            routerLinkActive="active"
+          >
+            Inbox
+          </a>
+          <a
+            [routerLink]="[
+              { outlets: { primary: 'folder/trash', pane: null } }
+            ]"
+            routerLinkActive="active"
+          >
+            Trash
+          </a>
         </nav>
         <mail-app></mail-app>
       </div>
