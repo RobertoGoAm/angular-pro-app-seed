@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/pluck";
 
 import { Mail } from "../../models/mail.interface";
 
