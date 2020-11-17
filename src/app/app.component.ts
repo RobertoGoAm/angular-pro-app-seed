@@ -98,22 +98,29 @@ interface File {
         <nav>
           <a
             [routerLink]="[
+              '/mail',
               { outlets: { primary: 'folder/inbox', pane: null } }
             ]"
             routerLinkActive="active"
           >
             Inbox
           </a>
+
           <a
             [routerLink]="[
+              '/mail',
               { outlets: { primary: 'folder/trash', pane: null } }
             ]"
             routerLinkActive="active"
           >
             Trash
           </a>
+
+          <a [routerLink]="['/dashboard']" routerLinkActive="active">
+            Dashboard
+          </a>
         </nav>
-        <mail-app></mail-app>
+        <router-outlet></router-outlet>
       </div>
     </div>
   `,

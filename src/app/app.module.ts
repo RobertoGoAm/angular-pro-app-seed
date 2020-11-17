@@ -23,7 +23,10 @@ import { MailModule } from "./mail/mail.module";
 // components
 
 // routes
-export const ROUTES: Routes = [];
+export const ROUTES: Routes = [
+  { path: "dashboard", loadChildren: "./dashboard/dashboard.module" },
+  { path: "**", redirectTo: "mail/folder/inbox" }
+];
 
 @NgModule({
   imports: [
