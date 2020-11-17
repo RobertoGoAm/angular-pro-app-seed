@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { Routes, RouterModule } from "@angular/router";
+import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
 
 import { Store } from "store";
 
@@ -24,14 +24,17 @@ import { MailModule } from "./mail/mail.module";
 
 // routes
 export const ROUTES: Routes = [
-  { path: "dashboard", loadChildren: "./dashboard/dashboard.module" },
+  {
+    path: "dashboard",
+    loadChildren: "./dashboard/dashboard.module#DashboardModule"
+  },
   { path: "**", redirectTo: "mail/folder/inbox" }
 ];
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules }),
     AuthFormModule,
     StockInventoryModule,
     MailModule
