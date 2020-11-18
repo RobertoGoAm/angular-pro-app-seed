@@ -1,6 +1,12 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
+import {
+  Routes,
+  RouterModule,
+  PreloadAllModules,
+  PreloadingStrategy,
+  Route
+} from "@angular/router";
 
 import { Store } from "store";
 
@@ -19,13 +25,20 @@ import { MyForDirective } from "./my-for/my-for.directive";
 import { FileSizePipe } from "./filesize.pipe";
 import { StockInventoryModule } from "./stock-inventory/stock-inventory.module";
 import { MailModule } from "./mail/mail.module";
+import { Observable } from "rxjs/Observable";
+import { of } from "rxjs/observable/of";
 
-// components
+export class CustomPreload implements PreloadingStrategy {
+  preload(route: Route, fn: () => Observable<any>): Observable<any> {
+    return route.data && route.data.preload ? fn() : of(null);
+  }
+}
 
 // routes
 export const ROUTES: Routes = [
   {
     path: "dashboard",
+    data: { preload: true },
     loadChildren: "./dashboard/dashboard.module#DashboardModule"
   },
   { path: "**", redirectTo: "mail/folder/inbox" }
@@ -34,7 +47,7 @@ export const ROUTES: Routes = [
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(ROUTES, { preloadingStrategy: CustomPreload }),
     AuthFormModule,
     StockInventoryModule,
     MailModule
@@ -50,7 +63,7 @@ export const ROUTES: Routes = [
     MyForDirective,
     FileSizePipe
   ],
-  providers: [Store],
+  providers: [Store, CustomPreload],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
