@@ -5,7 +5,7 @@ import {
   platformBrowserDynamicTesting
 } from "@angular/platform-browser-dynamic/testing";
 import { Observable } from "rxjs/Observable";
-import { StockInventoryService } from "./stock-inventory.services";
+import { StockInventoryService } from "./stock-inventory.service";
 
 TestBed.initTestEnvironment(
   BrowserDynamicTestingModule,

@@ -7,7 +7,7 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { Item, Product } from "../../models/products.interface";
-import { StockInventoryService } from "../../services/stock-inventory.services";
+import { StockInventoryService } from "../../services/stock-inventory.service";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/forkJoin";
 import { StockValidators } from "./stock-inventory.validators";
