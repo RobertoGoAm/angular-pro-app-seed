@@ -4,6 +4,7 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from "@angular/platform-browser-dynamic/testing";
+import { doesNotThrow } from "assert";
 import { Observable } from "rxjs/Observable";
 import { StockInventoryService } from "./stock-inventory.service";
 

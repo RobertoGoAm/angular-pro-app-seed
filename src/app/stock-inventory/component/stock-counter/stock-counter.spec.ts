@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
@@ -53,4 +53,19 @@ describe("StockCounterComponent", () => {
 
     expect(component.value).toBe(100);
   });
+
+  it("should not increment over the maximum value", () => {
+    component.step = 20;
+    component.max = 20;
+    component.increment();
+    component.increment();
+    expect(component.value).toBe(20);
+  });
+
+  it("should call the output on a value change", async((done) => {
+    spyOn(component.changed.emit, "emit").and.callThrough();
+    component.step = 100;
+    component.increment();
+    expect(component.changed.emit).toHaveBeenCalledWith(100);
+  }));
 });
