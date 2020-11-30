@@ -7,7 +7,7 @@ import { API_TOKEN } from "./token";
 
 @Injectable()
 export class FoodService {
-  constructor(private http: Http, @Inject(API_TOKEN) private api: string) {}
+  constructor(private http: Http, private api: string) {}
 
   getFood(): Observable<any[]> {
     return this.http.get(this.api).map((response) => response.json());

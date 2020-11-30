@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { OnInit } from "@angular/core";
+import { Http } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { FoodService } from "../food.service";
 
@@ -8,9 +9,19 @@ interface Drink {
   price: number;
 }
 
+export function DrinkFactory(http: Http) {
+  return new FoodService(http, "/api/drinks");
+}
+
 @Component({
   selector: "drink-viewer",
-  providers: [FoodService],
+  providers: [
+    {
+      provide: FoodService,
+      useFactory: DrinkFactory,
+      deps: [Http]
+    }
+  ],
   template: `
     <div>
       <div *ngFor="let item of items$ | async">
