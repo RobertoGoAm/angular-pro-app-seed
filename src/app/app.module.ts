@@ -32,6 +32,7 @@ import { PizzaViewerComponent } from "./containers/pizza-viewer.component";
 import { SideViewerComponent } from "./containers/side-viewer.component";
 import { DrinkViewerComponent } from "./containers/drink-viewer.component";
 import { API_TOKEN } from "./token";
+import { FoodStoreModule } from "./food-store/food-store.module";
 
 export class CustomPreload implements PreloadingStrategy {
   preload(route: Route, fn: () => Observable<any>): Observable<any> {
@@ -56,7 +57,11 @@ export const ROUTES: Routes = [
     RouterModule.forRoot(ROUTES, { preloadingStrategy: CustomPreload }),
     AuthFormModule,
     StockInventoryModule,
-    MailModule
+    MailModule,
+    FoodStoreModule.forRoot({
+      storeId: 10292,
+      storeToken: "eca938c99a0e9ff91029c"
+    })
   ],
   declarations: [
     AppComponent,
