@@ -33,6 +33,6 @@ export class PizzaViewerComponent implements OnInit {
   items$: Observable<Pizza[]>;
   constructor(private foodService: FoodService) {}
   ngOnInit() {
-    this.items$ = this.foodService.getFood();
+    this.items$ = this.foodService.getPizzas();
   }
 }

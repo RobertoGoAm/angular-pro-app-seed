@@ -33,6 +33,6 @@ export class SideViewerComponent implements OnInit {
   items$: Observable<Side[]>;
   constructor(private foodService: FoodService) {}
   ngOnInit() {
-    this.items$ = this.foodService.getFood();
+    this.items$ = this.foodService.getSides();
   }
 }
