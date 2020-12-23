@@ -4,6 +4,8 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
+  DoCheck,
+  NgZone,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -133,14 +135,15 @@ interface File {
         </nav>
         <router-outlet></router-outlet>
       </div> -->
-      <pizza-viewer></pizza-viewer>
-      <side-viewer></side-viewer>
-      <drink-viewer></drink-viewer>
+      <!-- <pizza-viewer></pizza-viewer> -->
+      <!-- <side-viewer></side-viewer> -->
+      <!-- <drink-viewer></drink-viewer> -->
+      Counter: {{ counter }}
     </div>
   `,
   providers: [FileSizePipe]
 })
-export class AppComponent implements AfterContentInit, OnInit {
+export class AppComponent implements AfterContentInit, OnInit, DoCheck {
   component: ComponentRef<AuthFormComponent>;
   @ViewChild("entry", { read: ViewContainerRef }) entry: ViewContainerRef;
   @ViewChild("tmpl") tmpl: TemplateRef<any>;
@@ -172,11 +175,13 @@ export class AppComponent implements AfterContentInit, OnInit {
   ];
   files: File[];
   mapped: File[];
+  counter = 0;
 
   constructor(
     private resolver: ComponentFactoryResolver,
     private fileSizePipe: FileSizePipe,
-    private router: Router
+    private router: Router,
+    private zone: NgZone
   ) {
     setTimeout(() => {
       this.items = [
@@ -187,24 +192,36 @@ export class AppComponent implements AfterContentInit, OnInit {
   }
 
   ngOnInit() {
-    this.files = [
-      { name: "logo.svg", size: 2120109, type: "image/svg" },
-      { name: "banner.jpg", size: 18029, type: "image/jpg" },
-      { name: "background.jpg", size: 1784562, type: "image/png" }
-    ];
-    this.mapped = this.files.map((file) => {
-      return {
-        name: file.name,
-        type: file.type,
-        size: this.fileSizePipe.transform(file.size, "mb")
-      };
-    });
+    // this.files = [
+    //   { name: "logo.svg", size: 2120109, type: "image/svg" },
+    //   { name: "banner.jpg", size: 18029, type: "image/jpg" },
+    //   { name: "background.jpg", size: 1784562, type: "image/png" }
+    // ];
+    // this.mapped = this.files.map((file) => {
+    //   return {
+    //     name: file.name,
+    //     type: file.type,
+    //     size: this.fileSizePipe.transform(file.size, "mb")
+    //   };
+    // });
 
-    this.router.events
-      .filter((event) => event instanceof NavigationEnd)
-      .subscribe((event) => {
-        console.log(event);
+    // this.router.events
+    //   .filter((event) => event instanceof NavigationEnd)
+    //   .subscribe((event) =>{
+    //     console.log(event);
+    //   });
+    this.zone.runOutsideAngular(() => {
+      for (let i = 0; i < 100; i++) {
+        this.counter++;
+      }
+      this.zone.run(() => {
+        setTimeout(() => (this.counter = this.counter), 1000);
       });
+    });
+  }
+
+  ngDoCheck() {
+    console.log("Change detection has been run!");
   }
 
   ngAfterContentInit() {
