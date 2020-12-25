@@ -140,11 +140,14 @@ interface File {
       <!-- <side-viewer></side-viewer> -->
       <!-- <drink-viewer></drink-viewer> -->
       <!-- Counter: {{ counter }} -->
-      <div>
+      <!-- <div>
         <div *ngFor="let todo of todos$ | async">
           {{ todo.name }}
         </div>
-      </div>
+      </div> -->
+      <song-playlist></song-playlist>
+      <song-listened></song-listened>
+      <song-favourites></song-favourites>
     </div>
   `,
   providers: [FileSizePipe]

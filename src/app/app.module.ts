@@ -34,6 +34,7 @@ import { DrinkViewerComponent } from "./containers/drink-viewer.component";
 import { API_TOKEN } from "./token";
 import { FoodStoreModule } from "./food-store/food-store.module";
 import { Store } from "./store";
+import { SongsModule } from "./songs/songs.module";
 
 export class CustomPreload implements PreloadingStrategy {
   preload(route: Route, fn: () => Observable<any>): Observable<any> {
@@ -62,7 +63,8 @@ export const ROUTES: Routes = [
     FoodStoreModule.forRoot({
       storeId: 10292,
       storeToken: "eca938c99a0e9ff91029c"
-    })
+    }),
+    SongsModule
   ],
   declarations: [
     AppComponent,
