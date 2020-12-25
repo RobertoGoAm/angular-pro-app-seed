@@ -18,6 +18,7 @@ import { User } from "./auth-form/auth-form.interface";
 import { FileSizePipe } from "./filesize.pipe";
 
 import "rxjs/add/operator/filter";
+import { Store } from "./store";
 
 interface File {
   name: string;
@@ -138,7 +139,12 @@ interface File {
       <!-- <pizza-viewer></pizza-viewer> -->
       <!-- <side-viewer></side-viewer> -->
       <!-- <drink-viewer></drink-viewer> -->
-      Counter: {{ counter }}
+      <!-- Counter: {{ counter }} -->
+      <div>
+        <div *ngFor="let todo of todos$ | async">
+          {{ todo.name }}
+        </div>
+      </div>
     </div>
   `,
   providers: [FileSizePipe]
@@ -176,12 +182,14 @@ export class AppComponent implements AfterContentInit, OnInit, DoCheck {
   files: File[];
   mapped: File[];
   counter = 0;
+  todos$ = this.store.select<any[]>("todos");
 
   constructor(
     private resolver: ComponentFactoryResolver,
     private fileSizePipe: FileSizePipe,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private store: Store
   ) {
     setTimeout(() => {
       this.items = [
@@ -189,6 +197,11 @@ export class AppComponent implements AfterContentInit, OnInit, DoCheck {
         { name: "Matt Skiba", age: 40, location: "California" }
       ];
     }, 2000);
+
+    this.store.set("todos", [
+      { id: 1, name: "Eat dinner" },
+      { id: 2, name: "Do washing" }
+    ]);
   }
 
   ngOnInit() {

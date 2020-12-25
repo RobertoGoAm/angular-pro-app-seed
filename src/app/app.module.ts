@@ -8,7 +8,7 @@ import {
   Route
 } from "@angular/router";
 
-import { Store } from "store";
+// import { Store } from "store";
 
 // feature modules
 
@@ -33,6 +33,7 @@ import { SideViewerComponent } from "./containers/side-viewer.component";
 import { DrinkViewerComponent } from "./containers/drink-viewer.component";
 import { API_TOKEN } from "./token";
 import { FoodStoreModule } from "./food-store/food-store.module";
+import { Store } from "./store";
 
 export class CustomPreload implements PreloadingStrategy {
   preload(route: Route, fn: () => Observable<any>): Observable<any> {
