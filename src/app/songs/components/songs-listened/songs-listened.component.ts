@@ -1,11 +1,26 @@
 import { Component } from "@angular/core";
+import { Observable } from "rxjs/Observable";
 import { Store } from "../../../store";
+import { SongsService } from "../../services/songs.services";
 
 @Component({
   selector: "song-listened",
   // styleUrls: ['song-playlist.component.scss'],
-  template: ` <div class="songs">Listened</div> `
+  template: `
+    <div class="songs">
+      <div *ngFor="let item of listened$ | async">
+        {{ item.artist }}
+        {{ item.track }}
+      </div>
+    </div>
+  `
 })
 export class SongListenedComponent {
-  constructor(private store: Store) {}
+  listened$: Observable<any[]>;
+
+  constructor(private store: Store, private songsService: SongsService) {}
+
+  ngOnInit() {
+    this.listened$ = this.store.select("playlist");
+  }
 }

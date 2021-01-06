@@ -4,6 +4,7 @@ import { HttpModule } from "@angular/http";
 import { SongFavouritesComponent } from "./components/songs-favourites/songs-favourites.component";
 import { SongListenedComponent } from "./components/songs-listened/songs-listened.component";
 import { SongPlaylistComponent } from "./components/songs-playlist/songs-playlist.component";
+import { SongsService } from "./services/songs.services";
 
 @NgModule({
   imports: [CommonModule, HttpModule],
@@ -16,6 +17,7 @@ import { SongPlaylistComponent } from "./components/songs-playlist/songs-playlis
     SongFavouritesComponent,
     SongListenedComponent,
     SongPlaylistComponent
-  ]
+  ],
+  providers: [SongsService]
 })
 export class SongsModule {}
