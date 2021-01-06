@@ -21,6 +21,9 @@ export class SongFavouritesComponent implements OnInit {
   constructor(private store: Store, private songsService: SongsService) {}
 
   ngOnInit() {
-    this.favourites$ = this.store.select("playlist");
+    this.favourites$ = this.store
+      .select("playlist")
+      .filter(Boolean)
+      .map((playlist) => playlist.filter((track) => track.favourite));
   }
 }
