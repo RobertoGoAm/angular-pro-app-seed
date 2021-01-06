@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Store } from "../../../store";
-import { SongsService } from "../../services/songs.services";
+import { Song, SongsService } from "../../services/songs.services";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/map";
 
@@ -10,10 +10,7 @@ import "rxjs/add/operator/map";
   // styleUrls: ['song-playlist.component.scss'],
   template: `
     <div class="songs">
-      <div *ngFor="let item of listened$ | async">
-        {{ item.artist }}
-        {{ item.track }}
-      </div>
+      <songs-list [list]="listened$ | async"> Played </songs-list>
     </div>
   `
 })
@@ -26,6 +23,6 @@ export class SongListenedComponent implements OnInit {
     this.listened$ = this.store
       .select("playlist")
       .filter(Boolean)
-      .map((playlist) => playlist.filter((track) => track.listened));
+      .map((playlist: Song[]) => playlist.filter((track) => track.listened));
   }
 }
