@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Store } from "../../../store";
 import { SongsService } from "../../services/songs.services";
@@ -15,7 +15,7 @@ import { SongsService } from "../../services/songs.services";
     </div>
   `
 })
-export class SongListenedComponent {
+export class SongListenedComponent implements OnInit {
   listened$: Observable<any[]>;
 
   constructor(private store: Store, private songsService: SongsService) {}
