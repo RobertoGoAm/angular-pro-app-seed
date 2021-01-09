@@ -8,7 +8,9 @@ import { Song, SongsService } from "../../services/songs.services";
   // styleUrls: ['song-playlist.component.scss'],
   template: `
     <div class="songs">
-      <songs-list [list]="favourites$ | async"> Favourites </songs-list>
+      <songs-list [list]="favourites$ | async" (toggle)="onToggle($event)">
+        Favourites
+      </songs-list>
     </div>
   `
 })
@@ -22,5 +24,9 @@ export class SongFavouritesComponent implements OnInit {
       .select("playlist")
       .filter(Boolean)
       .map((playlist: Song[]) => playlist.filter((track) => track.favourite));
+  }
+
+  onToggle(event: CustomEvent): void {
+    this.songsService.toggle(event);
   }
 }

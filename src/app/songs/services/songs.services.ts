@@ -21,4 +21,8 @@ export class SongsService {
     .do((next) => this.store.set("playlist", next));
 
   constructor(private http: Http, private store: Store) {}
+
+  toggle(event: any) {
+    console.log(event);
+  }
 }

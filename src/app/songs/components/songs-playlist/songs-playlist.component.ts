@@ -9,7 +9,9 @@ import { Song, SongsService } from "../../services/songs.services";
   // styleUrls: ['song-playlist.component.scss'],
   template: `
     <div class="songs">
-      <songs-list [list]="playlist$ | async"> Playlist </songs-list>
+      <songs-list [list]="playlist$ | async" (toggle)="onToggle($event)">
+        Playlist
+      </songs-list>
     </div>
   `
 })
@@ -26,5 +28,9 @@ export class SongPlaylistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  onToggle(event: CustomEvent): void {
+    this.songsService.toggle(event);
   }
 }

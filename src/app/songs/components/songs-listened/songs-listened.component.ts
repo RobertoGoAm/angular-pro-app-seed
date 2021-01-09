@@ -10,7 +10,9 @@ import "rxjs/add/operator/map";
   // styleUrls: ['song-playlist.component.scss'],
   template: `
     <div class="songs">
-      <songs-list [list]="listened$ | async"> Played </songs-list>
+      <songs-list [list]="listened$ | async" (toggle)="onToggle($event)">
+        Played
+      </songs-list>
     </div>
   `
 })
@@ -24,5 +26,9 @@ export class SongListenedComponent implements OnInit {
       .select("playlist")
       .filter(Boolean)
       .map((playlist: Song[]) => playlist.filter((track) => track.listened));
+  }
+
+  onToggle(event: CustomEvent): void {
+    this.songsService.toggle(event);
   }
 }
